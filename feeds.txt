@@ -1,0 +1,7 @@
+http://www.repubblica.it/rss/homepage/rss2.0.xml
+http://xml.corriereobjects.it/rss/homepage.xml
+http://www.ilfattoquotidiano.it/feed/
+http://www.ansa.it/main/notizie/awnplus/topnews/synd/ansait_awnplus_topnews_medsynd_Today_Idx.xml
+http://www.lastampa.it/rss.xml
+http://www.ilmattino.it/rss/primopiano.xml
+http://www.ilmessaggero.it/rss/primopiano.xml
