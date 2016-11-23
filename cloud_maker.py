@@ -10,7 +10,7 @@ Usage:
     [ --max-font-size=<max-font-size> ]
     [ --canvas=<canvasstring> ]
     [ --color-func=<color-func-name>  --color-func-params=<color-func-params> ]
-    [--logconfig] [--loadconfig=<savedconfig>]
+    [--logconfig] [--loadconfig=<savedconfig>] [--run]
     [--encoding=<encoding>] [--language=<language>] [--min-len=<min-len>]
     [--max-words=<max-words>]
 
@@ -18,6 +18,7 @@ Options:
   -h --help     Show this screen.
   --version     Show vesion.
   --logconfig   Writes a log (<output>.cloudconfig.json)
+  --run         Run Crazy Stuffs.
   --loadconfig=<savedconfig>    Loads a config. Can be overridden with other arguments.
   --fa-mask=<fa-mask>     Use fontawesome mask.
   --ionic-mask=<ionic-mask> Use ionicons mask.
@@ -46,6 +47,8 @@ from copy import copy
 from docopt import docopt
 from clouds import compute_frequencies, save_cloud, make_mask, get_google_font, get_color_func
 from feedsreader import readfeeds
+import os
+import datetime
 import logging
 
 
@@ -134,6 +137,8 @@ if __name__ == '__main__':
 
     text = readfeeds(arguments['<textfile>'])
 
+
+
     logger.info('Feed readed text:\n%s' % text)
 
     frequencies = compute_frequencies(
@@ -170,6 +175,22 @@ if __name__ == '__main__':
         canvas_width=canvas_width,
         canvas_height=canvas_height,
     )
+
+    if arguments['--run']:
+        logger.info(' ... Running ...')
+        dailydir = 'dailyclouds/' + datetime.date.today().strftime("%Y%m%d")
+        os.mkdir(dailydir)
+        save_cloud(
+            frequencies,
+            dailydir + '/newsimage.jpg',
+            options=options,
+            color_func=None,
+            canvas_width=canvas_width,
+            canvas_height=canvas_height,
+        )
+        with open(dailydir + '/newstext.txt', "w") as f:
+            f.write(text)
+
 
     if arguments['--logconfig']:
         logger.info(' ... Writing config ...')
