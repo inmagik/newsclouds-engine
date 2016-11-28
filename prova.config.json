@@ -1,9 +1,8 @@
 {
-  "--ionic-mask": "ion-home",
   "--max-font-size": null,
   "--encoding": "utf-8",
   "--version": false,
-  "--size": "500",
+  "--size": "800",
   "--max-words" : "400",
   "--min-len": "4",
   "--color-func": "hue-based",
@@ -11,5 +10,5 @@
   "--relative-scaling": "0.4",
   "--google-font": "Atma",
   "--background-color": "#333",
-  "--canvas": "500"
+  "--canvas": "1000"
 }

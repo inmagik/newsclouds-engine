@@ -5,12 +5,12 @@ Usage:
   cloud_maker.py --version
   cloud_maker.py <textfile> <output> [ --size=<sizestring> ]
     [ --background-color=<bk> ] [ --google-font=<google-font> ]
-    [ --fa-mask=<fa-mask> | --ionic-mask=<ionic-mask> ]
+    [ --fa-mask=<fa-mask> | --ionic-mask=<ionic-mask> | --image-mask=<image-mask> ]
     [ --relative-scaling=<relative-scaling> ]
     [ --max-font-size=<max-font-size> ]
     [ --canvas=<canvasstring> ]
     [ --color-func=<color-func-name>  --color-func-params=<color-func-params> ]
-    [--logconfig] [--loadconfig=<savedconfig>] [--run]
+    [--logconfig] [--loadconfig=<savedconfig>]
     [--encoding=<encoding>] [--language=<language>] [--min-len=<min-len>]
     [--max-words=<max-words>]
 
@@ -18,7 +18,6 @@ Options:
   -h --help     Show this screen.
   --version     Show vesion.
   --logconfig   Writes a log (<output>.cloudconfig.json)
-  --run         Run Crazy Stuffs.
   --loadconfig=<savedconfig>    Loads a config. Can be overridden with other arguments.
   --fa-mask=<fa-mask>     Use fontawesome mask.
   --ionic-mask=<ionic-mask> Use ionicons mask.
@@ -97,6 +96,9 @@ if __name__ == '__main__':
 
     print(options)
 
+    if not is.path.isdir(exported):
+        os.mkdir("exported")
+
     if arguments['--google-font']:
         font_name = arguments['--google-font']
         logger.info(' ... Using font ... % s' % font_name)
@@ -119,10 +121,20 @@ if __name__ == '__main__':
             size=min_dimension
         )
 
+    if arguments['--image-mask']:
+        logger.info(' ... Using image mask ... % s' % arguments['--image-mask'])
+        options["mask"] =  make_mask(
+            arguments['--image-mask'],
+            source = 'image',
+            size=min_dimension
+        )
+
+
+
     if arguments['--max-font-size']:
         logger.info(' ... Using max font size ... % s' % arguments['--max-font-size'])
         try:
-            options["max_font_size"] = float(arguments['--max-font-size'])
+            options["max_font_size"] = int(arguments['--max-font-size'])
         except:
             logger.error("!! Invalid value for max-font-size, skipping")
 
@@ -135,7 +147,8 @@ if __name__ == '__main__':
 
     logger.info(' ... Computing frequencies from %s ...' % arguments['<textfile>'])
 
-    text = readfeeds(arguments['<textfile>'])
+    with open(arguments['<textfile>'], "r") as textfile:
+        text = textfile.read()
 
 
 
@@ -175,7 +188,7 @@ if __name__ == '__main__':
         canvas_width=canvas_width,
         canvas_height=canvas_height,
     )
-
+    """
     if arguments['--run']:
         logger.info(' ... Running ...')
         dailydir = 'dailyclouds/' + datetime.date.today().strftime("%Y%m%d")
@@ -190,6 +203,7 @@ if __name__ == '__main__':
         )
         with open(dailydir + '/newstext.txt', "w") as f:
             f.write(text)
+    """
 
 
     if arguments['--logconfig']:

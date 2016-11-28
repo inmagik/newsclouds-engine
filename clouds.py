@@ -101,19 +101,26 @@ def compute_frequencies(
 
 def make_mask(icon, size=1000, source="fa", color="black", background_color='white'):
 
+    if source == 'image':
+        downloader = None
+
     if source =='ionic':
         downloader = IoniconsDownloader(FA_PATH)
 
-    else:
+    elif source == 'fa':
         downloader = FontAwesomeDownloader(FA_PATH)
-    downloader.download_files()
 
-    icon_font = IconFont(downloader.css_path, downloader.ttf_path, keep_prefix=True)
-    icon_font.export_icon(icon, size, color='black', scale='auto',
-        filename=None, export_dir='exported')
-    #icon = "circle"
-    # http://stackoverflow.com/questions/7911451/pil-convert-png-or-gif-with-transparency-to-jpg-without
-    icon_path = FA_PATH + "%s.png" % icon
+    if downloader:
+        downloader.download_files()
+
+        icon_font = IconFont(downloader.css_path, downloader.ttf_path, keep_prefix=True)
+        icon_font.export_icon(icon, size, color='black', scale='auto',
+            filename=None, export_dir='exported')
+        #icon = "circle"
+        # http://stackoverflow.com/questions/7911451/pil-convert-png-or-gif-with-transparency-to-jpg-without
+        icon_path = FA_PATH + "%s.png" % icon
+    else:
+        icon_path = icon
     #icon_path = os.path.join(d, "lord-ganesh.jpg")
     icon = Image.open(icon_path)
     mask = Image.new("RGB", icon.size, background_color)
@@ -164,7 +171,8 @@ def save_cloud(frequencies, output, options={}, color_func=None,canvas_width=0, 
 
     if(canvas_width and canvas_height):
         final_image =  Image.new(image.mode, (canvas_width, canvas_height), clean_options.get("background_color"))
-        offset = ((final_image.size[0] - image.size[0]) / 2, (final_image.size[1] - image.size[1]) / 2)
+        offset = (int((final_image.size[0] - image.size[0]) / 2), int((final_image.size[1] - image.size[1]) / 2))
+
         final_image.paste(image, offset)
         return final_image.save(output)
 
