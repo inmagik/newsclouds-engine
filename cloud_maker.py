@@ -47,7 +47,6 @@ from copy import copy
 from docopt import docopt
 from clouds import ( compute_frequencies, load_frequencies, save_frequencies,
     save_cloud, make_mask, get_google_font, get_color_func)
-from feedsreader import readfeeds
 import os
 import datetime
 import logging
@@ -111,6 +110,7 @@ def main():
             min_len=arguments['--min-len'])
 
     else:
+        logger.info(' ... Loading frequencies from %s ...' % arguments['<textfile>'])
         frequencies = load_frequencies(arguments['<textfile>'])
 
     if arguments['--frequencies-only']:
@@ -165,8 +165,6 @@ def main():
             options['relative_scaling'] = float(arguments['--relative-scaling'])
         except:
             logger.error('!! Wrong value for relative-scaling, skipping')
-
-
 
 
     if arguments['--color-func'] and arguments['--color-func-params']:
