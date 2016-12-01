@@ -13,6 +13,7 @@ Usage:
     [--logconfig] [--loadconfig=<savedconfig>]
     [--encoding=<encoding>] [--language=<language>] [--min-len=<min-len>]
     [--max-words=<max-words>]
+    [--frequencies-only] [--from-frequencies]
 
 Options:
   -h --help     Show this screen.
@@ -44,7 +45,8 @@ import sys
 import json
 from copy import copy
 from docopt import docopt
-from clouds import compute_frequencies, save_cloud, make_mask, get_google_font, get_color_func
+from clouds import ( compute_frequencies, load_frequencies, save_frequencies,
+    save_cloud, make_mask, get_google_font, get_color_func)
 from feedsreader import readfeeds
 import os
 import datetime
@@ -55,8 +57,8 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
+def main():
 
-if __name__ == '__main__':
     arguments = docopt(__doc__, version='Cloudmaker 1.0')
 
     if arguments['--loadconfig']:
@@ -73,8 +75,8 @@ if __name__ == '__main__':
     arguments['--language'] = arguments['--language'] or "italian"
     arguments['--background-color'] = arguments['--background-color'] or "white"
 
-
     size_pieces = arguments['--size'].lower().split("x")
+
     if len(size_pieces) == 1:
         width = int(size_pieces[0])
         height = width
@@ -96,7 +98,28 @@ if __name__ == '__main__':
 
     print(options)
 
-    if not is.path.isdir(exported):
+    if not arguments['--from-frequencies']:
+
+        with open(arguments['<textfile>'], "r") as textfile:
+            text = textfile.read()
+
+        logger.info(' ... Computing frequencies from %s ...' % arguments['<textfile>'])
+        frequencies = compute_frequencies(
+            text,
+            arguments['--encoding'],
+            language=arguments['--language'],
+            min_len=arguments['--min-len'])
+
+    else:
+        frequencies = load_frequencies(arguments['<textfile>'])
+
+    if arguments['--frequencies-only']:
+        logger.info(' ... Writing frequencies file %s ...' % arguments['<output>'])
+        save_frequencies(frequencies, arguments['<output>'])
+        sys.exit(0)
+
+
+    if not os.path.isdir("exported"):
         os.mkdir("exported")
 
     if arguments['--google-font']:
@@ -129,8 +152,6 @@ if __name__ == '__main__':
             size=min_dimension
         )
 
-
-
     if arguments['--max-font-size']:
         logger.info(' ... Using max font size ... % s' % arguments['--max-font-size'])
         try:
@@ -145,20 +166,8 @@ if __name__ == '__main__':
         except:
             logger.error('!! Wrong value for relative-scaling, skipping')
 
-    logger.info(' ... Computing frequencies from %s ...' % arguments['<textfile>'])
-
-    with open(arguments['<textfile>'], "r") as textfile:
-        text = textfile.read()
 
 
-
-    logger.info('Feed readed text:\n%s' % text)
-
-    frequencies = compute_frequencies(
-        text,
-        arguments['--encoding'],
-        language=arguments['--language'],
-        min_len=arguments['--min-len'])
 
     if arguments['--color-func'] and arguments['--color-func-params']:
         color_func_params = json.loads(arguments['--color-func-params'])
@@ -170,6 +179,7 @@ if __name__ == '__main__':
 
     arguments['--canvas'] = arguments['--canvas'] or "0x0"
     canvas_pieces = arguments['--canvas'].lower().split("x")
+
     if len(canvas_pieces) == 1:
         canvas_width = int(canvas_pieces[0])
         canvas_height = canvas_width
@@ -210,3 +220,7 @@ if __name__ == '__main__':
         logger.info(' ... Writing config ...')
         with open(arguments['<output>'] + ".cloudconfig.json", "wb") as f:
             json.dump(arguments, f, indent=2)
+
+
+if __name__ == '__main__':
+    main()

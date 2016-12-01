@@ -21,11 +21,14 @@ import chardet
 
 DAYS_MAP = {
     "Ven," : "Fri,",
-    "Gio," : "Thu,"
+    "Gio," : "Thu,",
+    "Mer," : "Wed,",
+    "Mar," : "Tue,",
 }
 
 MONTHS_MAP = {
-    "Nov" : "Nov"
+    "Nov" : "Nov",
+    "Dic" : "Dec",
 }
 
 

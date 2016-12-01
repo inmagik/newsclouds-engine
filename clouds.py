@@ -14,6 +14,7 @@ from icon_font_to_png.icon_font_downloader import IconFontDownloader
 from fontdump.core import GoogleFontGroup
 import requests
 import functools
+import json
 
 
 class IoniconsDownloader(IconFontDownloader):
@@ -96,6 +97,21 @@ def compute_frequencies(
     return frequencies
 
 
+def load_frequencies(filename):
+    with open(filename, "rt") as f:
+        txtdata = f.read()
+
+    lines = txtdata.split("\n")
+    pieces = [line.split(",") for line in lines]
+    print (pieces)
+    data = [[piece[0], int(piece[1])] for piece in pieces if piece and len(piece)==2]
+    return data
+
+
+def save_frequencies(data, filename):
+    txtdata = "\n".join([", ".join(str(x) for x in f) for f in data])
+    with open(filename, "wt") as f:
+        f.write(txtdata)
 
 
 

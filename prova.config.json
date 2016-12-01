@@ -6,9 +6,9 @@
   "--max-words" : "400",
   "--min-len": "4",
   "--color-func": "hue-based",
-  "--color-func-params": "{\"base_hue\":343, \"vibrance\":25}",
+  "--color-func-params": "{\"base_hue\":0, \"vibrance\":25}",
   "--relative-scaling": "0.4",
-  "--google-font": "Atma",
-  "--background-color": "#333",
+  "--google-font": "Fontdiner+Swanky",
+  "--background-color": "#fff",
   "--canvas": "1000"
 }
