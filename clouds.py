@@ -65,7 +65,7 @@ def compute_frequencies(
         # Remove punctuation
         # text = text.translate(None, string.punctuation)
     # Remove single-character tokens (mostly punctuation)
-    words = [word for word in words if len(word) > 4]
+    words = [word for word in words if len(word) >= int(min_len)]
 
     # Remove numbers
     #words = [word for word in words if not word.isnumeric()]
@@ -136,6 +136,9 @@ def make_mask(icon, size=1000, source="fa", color="black", background_color='whi
         icon_path = icon
     #icon_path = os.path.join(d, "lord-ganesh.jpg")
     icon = Image.open(icon_path)
+    if source == 'image':
+        icon = icon.resize((size, size), Image.ANTIALIAS)
+
     mask = Image.new("RGB", icon.size, background_color)
     mask.paste(icon,icon)
     mask = np.array(mask)

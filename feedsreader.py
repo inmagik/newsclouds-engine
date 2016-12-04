@@ -20,10 +20,13 @@ import datetime
 import chardet
 
 DAYS_MAP = {
-    "Ven," : "Fri,",
-    "Gio," : "Thu,",
-    "Mer," : "Wed,",
+    "Lun," : "Mon,",
     "Mar," : "Tue,",
+    "Mer," : "Wed,",
+    "Gio," : "Thu,",
+    "Ven," : "Fri,",
+    "Sab," : "Sat,",
+    "Dom," : "Sun,",
 }
 
 MONTHS_MAP = {

@@ -4,11 +4,11 @@
   "--version": false,
   "--size": "800",
   "--max-words" : "400",
-  "--min-len": "4",
+  "--min-len": "3",
   "--color-func": "hue-based",
-  "--color-func-params": "{\"base_hue\":0, \"vibrance\":25}",
-  "--relative-scaling": "0.4",
+  "--color-func-params": "{\"base_hue\":0, \"vibrance\":20}",
+  "--relative-scaling": "0.3",
   "--google-font": "Fontdiner+Swanky",
-  "--background-color": "#fff",
+  "--background-color": "#222",
   "--canvas": "1000"
 }
