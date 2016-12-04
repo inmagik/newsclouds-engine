@@ -27,8 +27,8 @@ def main():
     today_cloud = os.path.join(today_prefix, "%s.png" % today_prefix )
     today_config = os.path.join(today_prefix, "%s.config.json" % today_prefix )
 
-    #subprocess.check_call(["python", "feedsreader.py", "feeds.txt", today_feeds])
-    #subprocess.check_call(["python", "cloud_maker.py", today_feeds, today_frequencies, "--frequencies-only"])
+    subprocess.check_call(["python", "feedsreader.py", "feeds.txt", today_feeds])
+    subprocess.check_call(["python", "cloud_maker.py", today_feeds, today_frequencies, "--frequencies-only"])
 
     with open("prova.config.json", "rt") as f:
         base_config = json.load(f)

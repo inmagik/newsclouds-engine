@@ -1,1 +1,14 @@
-{"--canvas": "1000", "--google-font": "Fontdiner+Swanky", "--relative-scaling": "0.3", "--min-len": "3", "--version": false, "--background-color": "#222", "--size": "800", "--max-words": "400", "--max-font-size": null, "--color-func": "hue-based", "--encoding": "utf-8", "--color-func-params": "{\"base_hue\":57, \"vibrance\":20}"}
+{
+    "--size": "800",
+    "--color-func": "hue-based",
+    "--canvas": "1000",
+    "--color-func-params": "{\"base_hue\":218, \"vibrance\":20}",
+    "--min-len": "3",
+    "--version": false,
+    "--google-font": "Faster+One",
+    "--max-words": "400",
+    "--relative-scaling": "0.3",
+    "--max-font-size": null,
+    "--background-color": "#222",
+    "--encoding": "utf-8"
+}
