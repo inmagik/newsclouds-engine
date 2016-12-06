@@ -6,6 +6,7 @@ import datetime
 import subprocess
 import os
 import time
+import shutil
 
 app = Flask(__name__)
 
@@ -73,33 +74,47 @@ def make_cloud():
 def static_dailyclouds(path):
     return send_from_directory('', path)
 
-# @app.route("/clean-all", methods=['POST'])
-# def clean_all():
-#     today = datetime.date.today()
-#     cloud = today.strftime("%Y%m%d")
-#
-#     return redirect(url_for("index"))
-#
-# @app.route("/clean-config", methods=['POST'])
-# def clean_config():
-#     today = datetime.date.today()
-#     cloud = today.strftime("%Y%m%d")
-#
-#     return redirect(url_for("index"))
-#
-# @app.route("/clean-freq", methods=['POST'])
-# def clean_freq():
-#     today = datetime.date.today()
-#     cloud = today.strftime("%Y%m%d")
-#
-#     return redirect(url_for("index"))
-#
-# @app.route("/deploy", methods=['POST'])
-# def clean_freq():
-#     today = datetime.date.today()
-#     cloud = today.strftime("%Y%m%d")
-#
-#     return 'DEPLOY!'
+@app.route("/clean-all", methods=['POST'])
+def clean_all():
+    today = datetime.date.today()
+    cloud = today.strftime("%Y%m%d")
+
+    shutil.rmtree(cloud, ignore_errors=True)
+
+    subprocess.check_call(["python", "dailycloud.py"])
+
+    return redirect(url_for("index"))
+
+@app.route("/clean-config", methods=['POST'])
+def clean_config():
+    today = datetime.date.today()
+    cloud = today.strftime("%Y%m%d")
+
+    config_file = "./%s/%s.config.json" % (cloud, cloud)
+    os.remove(config_file)
+
+    subprocess.check_call(["python", "dailycloud.py"])
+
+    return redirect(url_for("index"))
+
+@app.route("/clean-freq", methods=['POST'])
+def clean_freq():
+    today = datetime.date.today()
+    cloud = today.strftime("%Y%m%d")
+
+    freq_file = "./%s/%s.freq.txt" % (cloud, cloud)
+    os.remove(freq_file)
+
+    subprocess.check_call(["python", "dailycloud.py"])
+
+    return redirect(url_for("index"))
+
+@app.route("/deploy", methods=['POST'])
+def deploy():
+    today = datetime.date.today()
+    cloud = today.strftime("%Y%m%d")
+
+    return 'DEPLOY!'
     # return redirect(url_for("index"))
 
 if __name__ == "__main__":

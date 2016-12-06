@@ -3,16 +3,23 @@
   <head>
   </head>
   <body>
-    <form method="post">
-      <h1>
-        {{ cloud }}
+      <h1>{{ cloud }}</h1>
+
+        <form method="post" action="/clean-all" style="display:inline"><button type="submit">CLEAN ALL</button></form>
+        <form method="post" action="/clean-freq" style="display:inline"><button type="submit">CLEAN FREQUENCIES</button></form>
+        <form method="post" action="/clean-config" style="display:inline"><button type="submit">CLEAN CONFIG</button></form>
+        <form method="post" action="/deploy" style="display:inline"><button type="submit">DEPLOY</button></form>
+
+
+    <form method="post" action="/" style="display:inline">
         <button type="submit">MAKE DAILYCLOUD</button>
-        <button type="submit">CLEAN FREQUENCIES</button>
-        <button type="submit">CLEAN CONFIG</button>
-        <button type="submit">DEPLOY</button>
-      </h1>
+
+      <p>
+        <a href="https://dailyclouds.inmagik.com/clouds/{{ cloud }}">https://dailyclouds.inmagik.com/clouds/{{ cloud }}</a>
+      </p>
 
       <div>
+
 
         <div style="float: left; width: 500px">
           <h2>Cloud</h2>
