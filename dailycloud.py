@@ -24,7 +24,7 @@ def main():
 
     today_feeds = os.path.join(today_prefix, "%s.txt" % today_prefix )
     today_frequencies = os.path.join(today_prefix, "%s.freq.txt" % today_prefix )
-    today_cloud = os.path.join(today_prefix, "%s.png" % today_prefix )
+    today_cloud = os.path.join(today_prefix, "%s.image.png" % today_prefix )
     today_config = os.path.join(today_prefix, "%s.config.json" % today_prefix )
 
     if not os.path.isfile(today_feeds):
