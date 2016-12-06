@@ -10,6 +10,7 @@ import shutil
 
 app = Flask(__name__)
 
+STOCK_REPO_PATH = "/Users/fuma/code/newsclouds-stock"
 
 @app.route("/")
 def index():
@@ -114,8 +115,19 @@ def deploy():
     today = datetime.date.today()
     cloud = today.strftime("%Y%m%d")
 
-    return 'DEPLOY!'
-    # return redirect(url_for("index"))
+    if os.path.isdir(cloud):
+        # Copy generated cloud
+        shutil.copytree(cloud, os.path.join(STOCK_REPO_PATH, cloud))
+
+        # Commmit new cloud
+        origWD = os.getcwd()
+        os.chdir(STOCK_REPO_PATH)
+        subprocess.check_call(["git", "add", cloud])
+        subprocess.check_call(["git", "commit", "-m", cloud])
+        subprocess.check_call(["git", "push", "origin", "master"])
+        os.chdir(origWD)
+
+    return redirect(url_for("index"))
 
 if __name__ == "__main__":
     app.run(debug=True)
