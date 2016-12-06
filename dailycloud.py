@@ -27,17 +27,21 @@ def main():
     today_cloud = os.path.join(today_prefix, "%s.png" % today_prefix )
     today_config = os.path.join(today_prefix, "%s.config.json" % today_prefix )
 
-    subprocess.check_call(["python", "feedsreader.py", "feeds.txt", today_feeds])
-    subprocess.check_call(["python", "cloud_maker.py", today_feeds, today_frequencies, "--frequencies-only"])
+    if not os.path.isfile(today_feeds):
+        subprocess.check_call(["python", "feedsreader.py", "feeds.txt", today_feeds])
 
-    with open("prova.config.json", "rt") as f:
-        base_config = json.load(f)
+    if not os.path.isfile(today_frequencies):
+        subprocess.check_call(["python", "cloud_maker.py", today_feeds, today_frequencies, "--frequencies-only"])
 
-    base_hue = random.randint(0, 360)
-    base_config["--color-func-params"] = "{\"base_hue\":%d, \"vibrance\":20}" % base_hue
+    if not os.path.isfile(today_config):
+        with open("prova.config.json", "rt") as f:
+            base_config = json.load(f)
 
-    with open(today_config, "wt") as fw:
-        base_config = json.dump(base_config, fw, indent=4)
+        base_hue = random.randint(0, 360)
+        base_config["--color-func-params"] = "{\"base_hue\":%d, \"vibrance\":20}" % base_hue
+
+        with open(today_config, "wt") as fw:
+            base_config = json.dump(base_config, fw, indent=4)
 
     cloud_args = ["python", "cloud_maker.py", today_frequencies, today_cloud, "--from-frequencies",
         "--loadconfig", today_config]
