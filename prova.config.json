@@ -5,10 +5,11 @@
     "--color-func-params": "{\"base_hue\":218, \"vibrance\":20}",
     "--min-len": "3",
     "--version": false,
-    "--google-font": "Special+Elite",
+    "--google-font": "Chelsea+Market",
     "--max-words": "400",
-    "--relative-scaling": "0.3",
+    "--relative-scaling": "0.5",
     "--max-font-size": null,
     "--background-color": "#222",
-    "--encoding": "utf-8"
+    "--encoding": "utf-8",
+    "--fa-mask": "gift"
 }

@@ -195,9 +195,13 @@ def save_cloud(frequencies, output, options={}, color_func=None,canvas_width=0, 
     return image.save(output)
 
 
-def get_color_func(base_hue, saturation=85, vibrance=0, max_l=90, min_l=40):
+def get_color_func(base_hue, saturation=85, vibrance=0, max_l=90, min_l=40, forced_colors={}):
 
     def grey_color_func(word, font_size, position, orientation, random_state=None, **kwargs):
+        # TODO: We should validate user input
+        if word in forced_colors:
+            return forced_colors[word]
+
         if(kwargs.get('vibrance', None)):
             vibrance = kwargs.get('vibrance')
             base_hue = kwargs.get('base_hue')

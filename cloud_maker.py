@@ -14,6 +14,7 @@ Usage:
     [--encoding=<encoding>] [--language=<language>] [--min-len=<min-len>]
     [--max-words=<max-words>]
     [--frequencies-only] [--from-frequencies]
+    [--force-words-colors=<force-words-colors>]
 
 Options:
   -h --help     Show this screen.
@@ -34,6 +35,7 @@ Options:
   --language=<language> Text language
   --min-len=<min-len>   Min len of words to draw [default: 3]
   --max-words=<max-words> Words in the cloud
+  --force-words-colors=<force-words-colors> JSON object for mapping particular words to particolar colors
 
 
 
@@ -169,6 +171,11 @@ def main():
 
     if arguments['--color-func'] and arguments['--color-func-params']:
         color_func_params = json.loads(arguments['--color-func-params'])
+
+        if arguments['--force-words-colors']:
+            force_words_colors = json.loads(arguments['--force-words-colors'])
+            color_func_params.update({"forced_colors":force_words_colors})
+
         if arguments['--color-func'].lower() == 'hue-based':
             options['color_func'] = get_color_func(**color_func_params)
 
