@@ -10,6 +10,5 @@
     "--relative-scaling": "0.5",
     "--max-font-size": null,
     "--background-color": "#222",
-    "--encoding": "utf-8",
-    "--fa-mask": "gift"
+    "--encoding": "utf-8"
 }
