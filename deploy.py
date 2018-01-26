@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import json
+import sys
 import os
 import subprocess
 import datetime
@@ -11,7 +12,13 @@ def main():
     today = datetime.date.today()
     today_prefix = today.strftime("%Y%m%d")
 
-    frotend_repo_path = '/Users/fuma/code/newsclouds-gatsby'
+    frotend_repo_path = None
+    try:
+        frotend_repo_path = sys.argv[1]
+    except IndexError:
+        raise ValueError('Please provide the frontend path')
+
+    print('Frontend: %s' % (frotend_repo_path, ))
 
     # Create the cloud
     subprocess.check_call(["python", "dailycloud.py"])
