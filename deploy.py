@@ -23,7 +23,8 @@ def main():
     # Create the cloud
     subprocess.check_call(["python", "dailycloud.py"])
 
-    # Move clouds dir
+    # Move the daily cloud dir
+    shutil.rmtree(os.path.join('dailyclouds', today_prefix), ignore_errors=True)
     shutil.move(today_prefix, os.path.join('dailyclouds', today_prefix))
 
     # Create the clouds json
