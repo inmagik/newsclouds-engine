@@ -2,7 +2,10 @@ from copy import copy
 import sys
 import codecs
 import nltk
+from nltk import ne_chunk, pos_tag, word_tokenize
 from nltk.corpus import stopwords
+from nltk.tree import Tree
+
 import numpy as np
 import os
 import re
@@ -48,6 +51,42 @@ WORD_CLOUD_DEFAULTS = {
     "relative_scaling": None,
 }
 
+common_articleswords = [
+        'foto', 'video', 'foto|video', 'video|foto', 'anni', 'giorni', 'sono', 
+        '``', "''", '""', '...',
+        'fa', 'fate', 'fanno', 'news', 'fare', "'s",
+        'altre', 'altro', 'altri', 'ancora', 'sempre', 'quando', 'dove',
+        'de', 'dei', 'coi', 'con'
+    ]
+    
+
+
+def get_continuous_chunks(text):
+    chunked = ne_chunk(pos_tag(word_tokenize(text)))
+    prev = None
+    continuous_chunk = []
+    current_chunk = []
+
+    for i in chunked:
+        if i in common_articleswords:
+            continue
+
+        if type(i) == Tree:
+            current_chunk.append(" ".join([token for token, pos in i.leaves()]))
+        elif current_chunk:
+            named_entity = " ".join(current_chunk)
+            if named_entity not in continuous_chunk:
+                continuous_chunk.append(named_entity)
+                current_chunk = []
+        else:
+            continue
+
+    if continuous_chunk:
+        named_entity = " ".join(current_chunk)
+        if named_entity not in continuous_chunk:
+            continuous_chunk.append(named_entity)
+
+    return continuous_chunk
 
 
 
@@ -62,8 +101,20 @@ def compute_frequencies(
     # fp = codecs.open(input_file, 'r', encoding)
     # words = nltk.word_tokenize(fp.read())
 
-        # Remove punctuation
-        # text = text.translate(None, string.punctuation)
+    seen_in_chunks = []
+    chunks = []
+    lines = text.split("\n")
+    for line in lines:
+        chunk = get_continuous_chunks(line)
+        chunks.extend(chunk)
+        for x in chunk:
+            seen_in_chunks.extend(x.split(" "))
+    
+    words = [word for word in words if word not in seen_in_chunks]
+    words.extend(chunks)
+
+    # Remove punctuation
+    # text = text.translate(None, string.punctuation)
     # Remove single-character tokens (mostly punctuation)
     words = [word for word in words if len(word) >= int(min_len)]
 
@@ -78,13 +129,6 @@ def compute_frequencies(
     words = [word for word in words if word.lower() not in default_stopwords]
 
     # Remove custom list of words
-    common_articleswords = [
-        'foto', 'video', 'foto|video', 'video|foto', 'anni', 'giorni', 'sono', 
-        '``', "''", '""', '...',
-        'fa', 'fate', 'fanno', 'news', 'fare', "'s",
-        'altre', 'altro', 'altri', 'ancora', 'sempre', 'quando', 'dove',
-        'de', 'dei', 'coi', 'con'
-    ]
     words = [word for word in words if word.lower() not in common_articleswords]
 
     # Calculate frequency distribution

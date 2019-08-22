@@ -21,7 +21,7 @@ def load_google_fonts():
     
     with open("google-fonts-list.json") as f:
         fonts = json.load(f)
-        f = [x["family"] for x in fonts]
+        f = [x["family"] for x in fonts if x["category"] != 'handwriting']
     
     return f
 
@@ -29,9 +29,9 @@ def main():
 
     RANDOM_FONTS = load_google_fonts()
     
-    today = datetime.date.today()
-    today_prefix = today.strftime("%Y%m%d")
-    logger.info(' ... Creating cloud for ... % s' % today )
+    today = datetime.datetime.now()
+    today_prefix = today.strftime("%Y%m%d-%H")
+    logger.info(' ... Creating cloud for ... % s' % today_prefix )
     if not os.path.isdir(today_prefix):
         os.mkdir(today_prefix)
 
