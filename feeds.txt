@@ -5,11 +5,4 @@ https://www.ansa.it/sito/ansait_rss.xml
 http://www.lastampa.it/rss.xml
 http://www.ilmattino.it/rss/primopiano.xml
 http://www.ilmessaggero.it/rss/primopiano.xml
-https://www.ilfoglio.it/rss.jsp?sezione=108
-https://news.google.com/rss
 https://st.ilsole24ore.com/rss/primapagina.xml
-
-
-
-
-

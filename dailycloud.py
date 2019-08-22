@@ -15,7 +15,20 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
+#RANDOM_FONTS = ["Chelsea+Market"]
+
+def load_google_fonts():
+    
+    with open("google-fonts-list.json") as f:
+        fonts = json.load(f)
+        f = [x["family"] for x in fonts]
+    
+    return f
+
 def main():
+
+    RANDOM_FONTS = load_google_fonts()
+    
     today = datetime.date.today()
     today_prefix = today.strftime("%Y%m%d")
     logger.info(' ... Creating cloud for ... % s' % today )
@@ -39,6 +52,9 @@ def main():
 
         base_hue = random.randint(0, 360)
         base_config["--color-func-params"] = "{\"base_hue\":%d, \"vibrance\":20}" % base_hue
+
+        #RANDOM FONT
+        base_config["--google-font"] = random.choice(RANDOM_FONTS)
 
         with open(today_config, "wt") as fw:
             base_config = json.dump(base_config, fw, indent=4)

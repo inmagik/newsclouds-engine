@@ -81,7 +81,9 @@ def compute_frequencies(
     common_articleswords = [
         'foto', 'video', 'foto|video', 'video|foto', 'anni', 'giorni', 'sono', 
         '``', "''", '""', '...',
-        'fa', 'fate', 'fanno', 'news', 'fare', 
+        'fa', 'fate', 'fanno', 'news', 'fare', "'s",
+        'altre', 'altro', 'altri', 'ancora', 'sempre', 'quando', 'dove',
+        'de', 'dei', 'coi', 'con'
     ]
     words = [word for word in words if word.lower() not in common_articleswords]
 
