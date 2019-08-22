@@ -9,8 +9,8 @@ import shutil
 from dateutil.parser import parse
 
 def main():
-    today = datetime.date.today()
-    today_prefix = today.strftime("%Y%m%d")
+    today = datetime.datetime.now()
+    today_prefix = today.strftime("%Y%m%d-%H")
 
     frotend_repo_path = None
     try:
@@ -35,7 +35,7 @@ def main():
 
         clouds.append({
             'name': entry,
-            'date': parse(entry).strftime('%Y-%m-%d'),
+            'date': parse(entry).strftime('%Y-%m-%d %H'),
             'image': '/dailyclouds/%s/%s.image.png' % (entry, entry, ),
             'txt': None,
         })
