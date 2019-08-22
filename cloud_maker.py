@@ -15,6 +15,7 @@ Usage:
     [--max-words=<max-words>]
     [--frequencies-only] [--from-frequencies]
     [--force-words-colors=<force-words-colors>]
+    [--prefer_horizontal=<prefer-horizontal>]
 
 Options:
   -h --help     Show this screen.
@@ -36,8 +37,7 @@ Options:
   --min-len=<min-len>   Min len of words to draw [default: 3]
   --max-words=<max-words> Words in the cloud
   --force-words-colors=<force-words-colors> JSON object for mapping particular words to particolar colors
-
-
+  --prefer_horizontal=<prefer-horizontal> The ratio of times to try horizontal fitting as opposed to vertical [default: 0.9].
 
 """
 #TODO: COLORING FUNCTION (other types/params)
@@ -94,7 +94,8 @@ def main():
         "max_font_size" : None,
         "width" : width,
         "height" : height,
-        "color_func" : None
+        "color_func" : None,
+        "prefer_horizontal": 0.9,
     }
 
     print(options)
@@ -178,6 +179,9 @@ def main():
 
         if arguments['--color-func'].lower() == 'hue-based':
             options['color_func'] = get_color_func(**color_func_params)
+
+    if arguments['--prefer_horizontal']:
+        options['prefer_horizontal'] = float(arguments['--prefer_horizontal'])
 
 
     logger.info(' ... Saving to file (%s) ...' % arguments['<output>'])

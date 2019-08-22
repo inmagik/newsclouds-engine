@@ -45,7 +45,7 @@ WORD_CLOUD_DEFAULTS = {
     "max_font_size": 250,
     "mask": None,
     "font_path": None,
-    "relative_scaling": None
+    "relative_scaling": None,
 }
 
 
@@ -69,10 +69,7 @@ def compute_frequencies(
 
     # Remove numbers
     #words = [word for word in words if not word.isnumeric()]
-
-    # Lowercase all words (default_stopwords are lowercase too)
-    #words = [word.lower() for word in words]
-
+    
     # Stemming words seems to make matters worse, disabled
     #stemmer = nltk.stem.snowball.SnowballStemmer('italian')
     #words = [stemmer.stem(word) for word in words]
@@ -80,7 +77,12 @@ def compute_frequencies(
     # Remove stopwords
     words = [word for word in words if word.lower() not in default_stopwords]
 
-    common_articleswords = ['foto', 'video', 'foto|video', 'video|foto', 'anni', 'giorni', 'sono']
+    # Remove custom list of words
+    common_articleswords = [
+        'foto', 'video', 'foto|video', 'video|foto', 'anni', 'giorni', 'sono', 
+        '``', "''", '""', '...',
+        'fa', 'fate', 'fanno', 'news', 'fare', 
+    ]
     words = [word for word in words if word.lower() not in common_articleswords]
 
     # Calculate frequency distribution

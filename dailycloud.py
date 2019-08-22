@@ -31,7 +31,7 @@ def main():
         subprocess.check_call(["python", "feedsreader.py", "feeds.txt", today_feeds])
 
     if not os.path.isfile(today_frequencies):
-        subprocess.check_call(["python", "cloud_maker.py", today_feeds, today_frequencies, "--frequencies-only"])
+        subprocess.check_call(["python", "cloud_maker.py", today_feeds, today_frequencies, "--frequencies-only", "--min-len=2"])
 
     if not os.path.isfile(today_config):
         with open("prova.config.json", "rt") as f:

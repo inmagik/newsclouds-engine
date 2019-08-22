@@ -11,13 +11,16 @@ Options:
 
 
 """
-from xml.etree.ElementTree import XML
+from xml.etree.ElementTree import XML, ParseError
 import string
 import requests
 from docopt import docopt
 from dateutil.parser import parse
 import datetime
 import chardet
+import logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 DAYS_MAP = {
     "Lun," : "Mon,",
@@ -42,7 +45,12 @@ def readfeedurl(feedurl, date=None):
     """
     date = date or datetime.date.today()
     # Get raw feed string from feed url
-    r = requests.get(feedurl)
+    try:
+        r = requests.get(feedurl)
+    except Exception as e:
+        logger.error('Error reading feed url: %s' % feedurl)
+        return ''
+
 
     # TODO: Check encoding...
     encoding = chardet.detect(r.content)['encoding']
@@ -54,7 +62,13 @@ def readfeedurl(feedurl, date=None):
     else:
         r.encoding = 'utf-8'
     # Parse raw feed string to xml
-    tree = XML(r.text.strip())
+    try:
+        tree = XML(r.text.strip())
+    except ParseError as e:
+        logger.error('Error reading feed: %s' % feedurl)
+        return ''
+
+    
 
     index = 0
     feedtext = ''

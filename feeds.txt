@@ -1,7 +1,15 @@
 http://www.repubblica.it/rss/homepage/rss2.0.xml
 http://xml.corriereobjects.it/rss/homepage.xml
 http://www.ilfattoquotidiano.it/feed/
-http://www.ansa.it/main/notizie/awnplus/topnews/synd/ansait_awnplus_topnews_medsynd_Today_Idx.xml
+https://www.ansa.it/sito/ansait_rss.xml
 http://www.lastampa.it/rss.xml
 http://www.ilmattino.it/rss/primopiano.xml
 http://www.ilmessaggero.it/rss/primopiano.xml
+https://www.ilfoglio.it/rss.jsp?sezione=108
+https://news.google.com/rss
+https://st.ilsole24ore.com/rss/primapagina.xml
+
+
+
+
+
