@@ -7,9 +7,12 @@ import subprocess
 import datetime
 import shutil
 from dateutil.parser import parse
+import pytz
+
+TIME_ZONE = pytz.timezone('Europe/Rome')
 
 def main():
-    today = datetime.datetime.now()
+    today = datetime.datetime.now(TIME_ZONE)
     today_prefix = today.strftime("%Y%m%d-%H")
 
     frotend_repo_path = None

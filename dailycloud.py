@@ -10,9 +10,12 @@ import subprocess
 import os
 import json
 import random
+import pytz
+
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+TIME_ZONE = pytz.timezone('Europe/Rome')
 
 
 #RANDOM_FONTS = ["Chelsea+Market"]
@@ -29,7 +32,7 @@ def main():
 
     RANDOM_FONTS = load_google_fonts()
     
-    today = datetime.datetime.now()
+    today = datetime.datetime.now(TIME_ZONE)
     today_prefix = today.strftime("%Y%m%d-%H")
     logger.info(' ... Creating cloud for ... % s' % today_prefix )
     if not os.path.isdir(today_prefix):
