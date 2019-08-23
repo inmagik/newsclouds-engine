@@ -56,7 +56,8 @@ common_articleswords = [
         '``', "''", '""', '...',
         'fa', 'fate', 'fanno', 'news', 'fare', "'s",
         'altre', 'altro', 'altri', 'ancora', 'sempre', 'quando', 'dove',
-        'de', 'dei', 'coi', 'con'
+        'de', 'dei', 'coi', 'con',
+        'prima', 'dopo', 'mai', 'ancora', 'ecco', 'quanto', 'uno', 'così', 'durante', 'mentre', 
     ]
     
 
