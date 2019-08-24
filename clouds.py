@@ -58,6 +58,7 @@ common_articleswords = [
         'altre', 'altro', 'altri', 'ancora', 'sempre', 'quando', 'dove',
         'de', 'dei', 'coi', 'con',
         'prima', 'dopo', 'mai', 'ancora', 'ecco', 'quanto', 'uno', 'così', 'durante', 'mentre', 
+        'mai', 'senza', 'oggi', "c'è", "essere", 'avere', 'già', 'quasi', 'molto', 'poco',
     ]
     
 
